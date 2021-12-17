@@ -34,6 +34,8 @@ prt_shortpath <- function(segs_tbl, vis_graph, blend = TRUE) {
   })
   }
   vis_graph <- sfnetworks::activate(vis_graph,"edges")
+  
+  wts <- sfnetworks:::set_path_weights(vis_graph, "weight")
 
   segs_tbl <- prt_nearestnode(segs_tbl,vis_graph)
 
@@ -41,7 +43,7 @@ prt_shortpath <- function(segs_tbl, vis_graph, blend = TRUE) {
     unlist(igraph::shortest_paths(graph = vis_graph,
                                   from = segs_tbl$start_node[i],
                                   to = segs_tbl$end_node[i],
-                                  weights = NULL,
+                                  weights = wts,
                                   output = "epath")$epath)
   })
 
